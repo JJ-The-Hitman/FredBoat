@@ -249,6 +249,7 @@ public class FredBoat {
         CommandRegistry.registerCommand(0x010, "shuffle", new ShuffleCommand());
         CommandRegistry.registerCommand(0x010, "repeat", new RepeatCommand());
         CommandRegistry.registerCommand(0x010, "volume", new VolumeCommand());
+        CommandRegistry.registerCommand(0x010, "musiclock", new MusicChannelLockCommand());
         CommandRegistry.registerCommand(0x010, "playerdebug", new PlayerDebugCommand());
 
         /* Other Anime Discord or Sergi memes */

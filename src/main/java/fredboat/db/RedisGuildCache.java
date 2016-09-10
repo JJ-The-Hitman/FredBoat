@@ -82,7 +82,9 @@ public class RedisGuildCache {
     public void setChannelLock(TextChannel tc) {
         JSONObject settings = getSettings();
         ArrayList<String> a = new ArrayList<>();
-        a.add(tc.getId());
+        if(tc != null){
+            a.add(tc.getId());
+        }
         settings.put(guild, a);
         setSettings(settings);
     }
