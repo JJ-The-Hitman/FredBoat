@@ -2,6 +2,7 @@ package fredboat.db;
 
 import fredboat.util.BotConstants;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import net.dv8tion.jda.entities.TextChannel;
 import org.json.JSONArray;
@@ -59,23 +60,35 @@ public class RedisGuildCache {
         JSONObject settings = getSettings();
 
         if (settings.has("musicLockAllowedChannels")) {
-            JSONArray allowed = settings.getJSONArray("musicLockAllowedChannels");
+            List<String> allowed = getMusicChannelLocks();
 
-            if (allowed.length() == 0) {
+            if (allowed.isEmpty()) {
                 return false;
             }
 
-            for (Object str : allowed) {
-                if (str.equals(tc.getId())) {
-                    return false;
-                }
-            }
-
             //Only if there are values and they don't match our given channel
-            return true;
+            return allowed.contains(tc.getId()) == false;
         }
 
         return false;
+    }
+    
+    public List<String> getMusicChannelLocks(){
+        JSONObject settings = getSettings();
+
+        if (settings.has("musicLockAllowedChannels")) {
+            JSONArray allowed = settings.getJSONArray("musicLockAllowedChannels");
+
+            final ArrayList<String> a = new ArrayList<>();
+            
+            allowed.forEach((Object str) -> {
+                a.add((String) str);
+            });
+            
+            return a;
+        }
+        
+        return new ArrayList<>();
     }
 
     /* WRITE - Helper functions */
