@@ -125,7 +125,7 @@ public class FredBoat {
                     .addListener(listenerBot)
                     .addListener(new EventLogger("216689009110417408"))
                     .setBotToken(accountToken)
-                    .setBulkDeleteSplittingEnabled(false)
+                    .setBulkDeleteSplittingEnabled(true)
                     .buildAsync();
         }
 
