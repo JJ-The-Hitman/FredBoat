@@ -147,7 +147,12 @@ public class FredBoat {
         //Redis
         String redisHost = credsjson.getString("redisHost");
         String redisPassword = credsjson.getString("redisPassword");
-        RedisCache.init(redisHost, redisPassword);
+        
+        try {
+            RedisCache.init(redisHost, redisPassword);
+        } catch (Exception e){
+            log.error("Failed to connect to Redis! This might cause problems with the bot.", e);
+        }
 
         if (!BotConstants.IS_BETA) {
             CarbonitexAgent carbonitexAgent = new CarbonitexAgent(jdaBot, credsjson.getString("carbonKey"));
