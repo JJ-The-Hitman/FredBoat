@@ -15,7 +15,12 @@ public class JoinCommand extends Command implements IMusicCommand {
     public void onInvoke(Guild guild, TextChannel channel, User invoker, Message message, String[] args) {
         GuildPlayer player = PlayerRegistry.get(guild.getId());
         player.currentTC = channel;
-        player.joinChannel(invoker);
+        try {
+            player.joinChannel(invoker);
+        } catch (IllegalStateException ex) {
+            channel.sendMessage("An error occurred. Couldn't join " + player.getChannel().getName() + " because I am already trying to connect to that channel. Please try again.");
+            return;
+        }
     }
-    
+
 }

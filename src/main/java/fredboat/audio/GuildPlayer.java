@@ -121,7 +121,12 @@ public class GuildPlayer extends MusicPlayer {
     public void playOrQueueSong(String url, TextChannel channel, User invoker) {
         //Check that we are in the same voice channel
         if (invoker != null && getUserCurrentVoiceChannel(invoker) != getChannel()) {
-            joinChannel(invoker);
+            try {
+                joinChannel(invoker);
+            } catch (IllegalStateException ex) {
+                channel.sendMessage("An error occurred. Couldn't join " + getChannel().getName() + " because I am already trying to connect to that channel. Please try again.");
+                return;
+            }
         }
 
         //Now we will either have thrown an exception or be in the same channel
